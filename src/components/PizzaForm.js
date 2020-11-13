@@ -13,7 +13,6 @@ export default function PizzaForm() {
         toppings: "",
         substitute: "",
         instructions: "",
-        quantity: "",
     };
 
     //temp state to set state
@@ -36,9 +35,9 @@ export default function PizzaForm() {
         .string()
         .email("Must be a valid email address")
         .required(),
-        pizzaSize: yup.string().oneOf('Small-10 inch, 6 slices', 'Medium-12 inches, 8 slices', 'Large-14 inches, 10 slices', 'ExLarge-18 inches, 12 slices' )
+        pizzaSize: yup.string().oneOf(['Small-10 inch, 6 slices', 'Medium-12 inches, 8 slices', 'Large-14 inches, 10 slices', 'ExLarge-18 inches, 12 slices'] )
         .required(),
-        sauce: yup.string().oneOf('Original Red', 'Alfredo', 'Garlic Ranch', 'Buffalo','BBQ', 'No Sauce')
+        sauce: yup.string().oneOf(['Original Red', 'Alfredo', 'Garlic Ranch', 'Buffalo','BBQ', 'No Sauce'])
         .required()
     });
 
@@ -77,8 +76,8 @@ export default function PizzaForm() {
                 sauce: "",
                 toppings: "",
                 substitute: "",
-                instructions: "",
-                quantity: "",
+                instructions: ""
+
             });
 
             setServerError(null);
@@ -303,12 +302,12 @@ export default function PizzaForm() {
             name="instructions"
             />
         </Form.Group>
-
+    <pre>{JSON.stringify(order, null, 2)}</pre>
         <Form.Group as={Row}>
             <Col sm={{ span: 10, offset: 2 }}>
             <Button 
             disabled={isButtonDisabled}
-            type="submit">Sign in</Button>
+            type="submit">Submit Order</Button>
             </Col>
         </Form.Group>
         </Form>
