@@ -1,104 +1,229 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Route, Link, useHistory } from 'react-router-dom'
+import Pizza from './Pizza2'
 
 const OrderInfo = styled.div`
+    *{
+    font-size: 62.5%;
+    }
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-content: center;
     text-align: center;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
 
-    background-image: url("https://images.unsplash.com/photo-1590534247854-e97d5e3feef6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+    .background{
+    background-image: url("https://images.unsplash.com/photo-1544982503-9f984c14501a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-    
-    h2{
-    font-size: 4rem;
-    font-weight: bold;
+    height: fit-content;
+    }
+
+    .nav-links{
+    font-size: 3rem;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: .5rem;
+    margin-right: 4rem;
+    }
+
+    .home{
+    text-decoration: none;
     color: white;
     text-shadow: 1px 1px 1px gray;
     }
+    
+    .formTitle{
+    font-size: 6rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 1px gray;
+    font-family: Arial, Helvetica, sans-serif;
+    }
+
     .formContainer{
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         align-content: center;
-        justify-content: center;
-        width: 30%;
-        border: 1px solid white;
+        width: 100%;
+        /* border: 1px solid white; */
+        align-self: center;
     }
-    .formInputs{
+    .formContent{
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        padding: 2%;
-        color: white;
-        font-size: 1.8rem;
+        align-content: center;
+        width: 45%;
+        padding: 1rem;
+        background-color: #ffffff;
+        opacity: 0.7;
+        margin-bottom: 2rem;
     }
+
+    .formInputs{
+        align-items: center;
+        text-align: left;
+        color: black;
+        font-size: 1.8rem; 
+        width:100%; 
+    }
+
+    #textInput{
+        height: 38px;
+        font-size: 1.4rem;
+        color: black;
+        width: 100%; 
+    }
+
+    select, input{
+      width:100%;
+      box-sizing:border-box;
+    }
+
     .dropdown{
+        color: black;
+        font-size: 1.8rem;   
+        text-align: left;
+        margin: .2rem;
+    }
+     #dropdown{
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        width: 100%;
+        padding: .2rem;
+        font-size: 1.5rem;
+        margin: .3rem 0;  
+     }   
+
+    p{
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        align-items: center;
-        color: white;
-        font-size: 1.8rem;   
-    }
-     #quantity{
-         width: 22rem;
-     }   
-    }
-    .btns h4{
         font-family: Arial, Helvetica, sans-serif;
-        margin:2%;
+        font-size: 1.3rem;
+        align-self: center;
+        align-content: center;
+    }
+    .subtitle{
+        font-size: 1.4rem;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        display: flex;
+        flex-direction: column;  
+    }
+
+    h4{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.2rem;
+    }
+
+    .subtitle2{
+        font-size: 1.5rem;
     }
 
     .formInputs label{
-        line-height: 26px;
+        line-height: 2.6rem;
         display: flex;
         flex-direction: column;
         text-align: left;
     }
     
     .formInputs input{
-        height: 20px;
+        /* height: 20vh; */
         width: 23rem;
-        margin: 1%;
     }
-    .termsCheckbox{
+    
+    .checkbox{
+        display: flex;
+        flex-direction: column;
+        /* flex-wrap: wrap; */
+        align-content: flex-start;
+        text-align: left;
         width: 40rem;
+        font-size: 1.6rem;
     }
-    .termsCheckbox input{
+
+    .checkbox input{
+        /* position: static; */
+        /* display: flex;
+        flex-direction: column; */
         width: 1.5rem;
+        margin-left: 3rem;
     }
 
     button{
-        padding: 1%;
-        margin: 3%;
+        padding: 1rem;
+        margin: 2rem;
         font-size: 1.5rem;
     }
     .error{
+        font-size: 1.1rem;
         color: red;
     }
+    @media(max-width: 400px){
+        .nav-links{
+        font-size: 2rem;
+        justify-content: center;
+        margin-right: 0rem;
+    }  
+        .formTitle{
+        font-size: 4rem;
+        }   
+        .formContent{
+        width: 78%;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    .checkbox{
+        width: 15rem;
+        font-size: 1.6rem;
+    }
+    .checkbox input{
+        width: 1.5rem;
+        margin-left: .5rem;
+    }
+    }
+    @media(max-width: 768px){
+        .formContent{
+        width: 89%;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+}
 `
 
 const PizzaForm = (props) => {
-    const {values, change, disabled, errors, orders } = props;
+    const {values, change, disabled, errors, submit } = props;
+
+    const history = useHistory();
+    const routeToOrderForm = () => {
+        history.push('/order');
+    }
 
     const onSubmit = (evt) => {
         evt.preventDefault();
-        let orderId = orders.length;
-        let order = { "orderId": orderId, "size": values.size, "sauce": values.sauce, "toppings": values.toppings, "substitue": values.substitute, "total": values.total };
-        order.push(order);
-        this.props.history.push('/order/' + orderId);
-        // submit()
+        // orders.map((orders) => {
+        //     return <Pizza key={orders.id} details={orders}/>
+        //   })
+          
+
+        //   this.props.history.push('/order');
+
+        // let orderId = orders.length;
+        // let order = { "name": values.name, "size": values.size, "sauce": values.sauce, "toppings": values.toppings, "substitue": values.substitute, "total": values.total };
+        // orders.push(order);
+        // this.props.history.push('/order/');
+        // console.log("/orders/")
+        submit()
     };
-    
+     
 
     const onChange = (evt) => {
         const { name, value, checked, type } = evt.target;
@@ -131,35 +256,42 @@ const PizzaForm = (props) => {
     
 
     return (
-        <OrderInfo>
+    <OrderInfo>
+        <div className="background">
+            <div className="nav-links">
+                <Link className="home" to="/">Home</Link>
+            </div>
             <div className="formTitle">
                     <h2>Build Your Own Pizza</h2>
                     
                 </div>
             <form className="formContainer" onSubmit={onSubmit}>
-                
+                <div className="formContent">
 
                 <div className="formInputs">
                     <label>
                         Name:
                         <input
+                            id="textInput"
                             type="text"
                             name="name"
                             onChange={onChange}
                             value={values.name}
-                            placeholder="Enter Name"
+                            
                         />
                         {errors.name.length > 0 ? ( <p className='error' > {errors.name} </p> ) : null }
                     </label>
-
+                </div>
+                <div className="formInputs">
                     <label>
                         Email:
                         <input
+                            id="textInput"
                             type="email"
                             name="email"
                             onChange={onChange}
                             value={values.email}
-                            placeholder="Enter Email"
+                            
                         />
                         {errors.email.length > 0 ? ( <p className='error' > {errors.email} </p> ) : null }
                     </label>
@@ -167,23 +299,26 @@ const PizzaForm = (props) => {
                     
                 <div className="dropdown">
                     {/* Quantity */}
-                <label>
+                    <label>
                     Quantity:
                         <input
-                            id="quantity"
+                            id="dropdown"
                             type="number"
                             name="quantity"
                             min="1"
                             max="2"
                             onChange={onChange}
                             value={values.quantity}
-                            placeholder="Select Quantity"
+            
                         />
                     </label>
+                </div>
+                <div className="dropdown">
                     {/* Size */}
                     <label>
                         Pick Your Size:
                         <select
+                            id="dropdown"
                             name="pizzaSize"
                             onChange={onChange}
                             value={values.pizzaSize}>
@@ -201,29 +336,12 @@ const PizzaForm = (props) => {
                         {errors.pizzaSize.length > 0 ? ( <p className='error' > {errors.pizzaSize} </p> ) : null }
                     </label>
                 </div>
-                <div className="checkbox">
-                    
-                    <p>All pizzas are made on our homemade, handtossed crust!</p>
-                    {/* Substitutions */}
-            
-                    <h4>Need a gluten free option?</h4>
-                
-                    <label>
-                        
-                        <input 
-                            type="checkbox"
-                            name="substitute"
-                            checked={values.substitute}
-                            onChange={onChange}
-                            />
-                            Gluten Free Crust (+ $2.00)
-                    </label>
-                </div>
-                    {/* Sauce */}
+                {/* Sauce */}
                 <div className="dropdown">
                     <label>
                         Pick Your Sauce
                         <select
+                            id="dropdown"
                             name="sauce"
                             onChange={onChange}
                             value={values.sauce}>
@@ -238,10 +356,27 @@ const PizzaForm = (props) => {
                         {errors.sauce.length > 0 ? ( <p className='error' > {errors.sauce} </p> ) : null }
                     </label>
                 </div>
+                <p>All pizzas are made on our homemade, hand-tossed crust!<br></br><br></br>
+                    {/* Substitutions */}
+            
+                    <span className="subtitle">Need a gluten free option?</span></p>
+                <div className="checkbox">
+                    <label>
+                    
+                        <input 
+                            id="checkbox"
+                            type="checkbox"
+                            name="substitute"
+                            checked={values.substitute}
+                            onChange={onChange}
+                            />
+                            Gluten Free Crust(+ $2.00)
+                    </label>
+                </div>
+                    
                 {/* toppings checkbox */}
-                <div className="termsCheckbox">
-                    <h4>Choose Your Toppings:</h4>
-                
+                <p className="subtitle2">Choose Your Toppings:</p>
+                <div className="checkbox">
                     <label>
                         <input 
                             type="checkbox"
@@ -357,20 +492,30 @@ const PizzaForm = (props) => {
                     <label>
                         Special Instructions:
                         <input
+                            id="textInput"
                             type="textarea"
                             name="instructions"
                             onChange={onChange}
                             value={values.instructions}
-                            placeholder="Enter special instructions here"
+                            
                             
                         />
                     </label>
                 </div>
+                
                 <div>
-                <button className="submit" disabled={disabled} >Add to Order ${values.total}</button>
+                <button className="submit" disabled={disabled} onClick={routeToOrderForm} >Add to Order ${values.total}</button>
+                </div>
                 </div>
             </form>
-        </OrderInfo>
+        </div>
+        <Route path={"/order"}>
+        <Pizza
+        values={values}/>
+        </Route>
+    </OrderInfo>
+
+    
     )
 }
 

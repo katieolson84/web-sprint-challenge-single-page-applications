@@ -4,7 +4,7 @@ import PizzaForm from "./PizzaForm2";
 import Pizza from "./Pizza2"
 import Home from "./Home2";
 
-// import axios from 'axios';
+import axios from 'axios';
 import schema from '../validation/formSchema';
 import * as yup from 'yup';
 import styled from 'styled-components'
@@ -77,19 +77,19 @@ const [formValues, setFormValues] = useState(initialFormValues);
 const [formErrors, setFormErrors] = useState(initialFormErrors);
 const [disabled, setDisabled] = useState(initialDisabled);
 
-// const postNewOrder = (newOrder) => {
-//   axios
-//     .post('https://reqres.in/api/users', newOrder)
-//     .then((res) => {
-//       setOrder([...order, res.data]);
-//       console.log(res.data)
-//       setFormValues(initialFormValues); //resets form
-//     })
-//     .catch((err) => {
-//       debugger;
-//       console.log(err);
-//     });
-// };
+const postNewOrder = (newOrder) => {
+  axios
+    .post('https://reqres.in/api/users', newOrder)
+    .then((res) => {
+      setOrder([...order, res.data]);
+      console.log(res.data)
+      setFormValues(initialFormValues); //resets form
+    })
+    .catch((err) => {
+      debugger;
+      console.log(err);
+    });
+};
 
 const inputChange = (name, value) => {
   yup
@@ -109,18 +109,18 @@ const inputChange = (name, value) => {
       ...formValues, [name]: value,
     });
 };
-// const formSubmit = () => {
-//   const newOrder= {
-//     name: formValues.name.trim(),
-//     email: formValues.email.trim(),
-//     pizzaSize: formValues.pizzaSize,
-//     sauce: formValues.sauce,
-//     toppings: ["pepperoni", "sausage", "bacon", "spicySausage", "grilledChicken", "redOnion", "dicedWhiteOnion", "greenPepper", "dicedTomatoes", "blackOlives", "artichokeHearts", "pineapple", ].filter((toppings) => formValues[toppings]),
-//     substitute: formValues.substitute,
-//     instructions: formValues.instructions.trim()
-//   };
-//  postNewOrder(newOrder)
-// };
+const formSubmit = () => {
+  const newOrder= {
+    name: formValues.name.trim(),
+    email: formValues.email.trim(),
+    pizzaSize: formValues.pizzaSize,
+    sauce: formValues.sauce,
+    toppings: ["pepperoni", "sausage", "bacon", "spicySausage", "grilledChicken", "redOnion", "dicedWhiteOnion", "greenPepper", "dicedTomatoes", "blackOlives", "artichokeHearts", "pineapple", ].filter((toppings) => formValues[toppings]),
+    substitute: formValues.substitute,
+    instructions: formValues.instructions.trim()
+  };
+ postNewOrder(newOrder)
+};
 
 useEffect(() => {
   schema.isValid(formValues)
@@ -135,13 +135,17 @@ useEffect(() => {
       <div className="home-wrapper">
       <Switch>
         
-        <Route path="/order" component={Pizza}/>
+        <Route path={"/order"}>
+          <Pizza
+            values={formValues}/>
+        </Route>
         <Route path={"/pizza"}>
           <PizzaForm
-          orders={order}
+          // orders={values}
           values={formValues}
           change={inputChange}
           disabled={disabled}
+          submit={formSubmit}
           errors={formErrors}
           />
         </Route> 
