@@ -15,7 +15,7 @@ const HomeContainer = styled.div`
     align-content: center;
     text-align: center;
     width: 100vw;
-    // height: auto;
+    height: auto;
   
   .home-wrapper{
     background-image: url("https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1225&q=80");
@@ -23,12 +23,12 @@ const HomeContainer = styled.div`
     background-position: center;
     background-size: cover;
     min-height: calc(100vh);
-    overflow:hidden;
+    // overflow:hidden;
     }
     .transbox{
         background-color: #ffffff;
         opacity: 0.6;
-        height: 35vh;
+        height: 30vh;
     }
     .store-header{
         font-size: 8rem;
