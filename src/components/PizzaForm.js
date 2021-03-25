@@ -1,372 +1,510 @@
-// import React, {useState, useEffect} from "react";
-// import {Form, Col, Row} from 'react-bootstrap';
-// import * as yup from "yup"; 
-// import axios from "axios";
-// // import Pizza from './Pizza'
-// import schema from '../validation/formSchema';
-// import { useHistory } from "react-router-dom";
+import React from 'react'
+import styled from 'styled-components'
+import { Route, Link, useHistory } from 'react-router-dom'
+import Pizza from './Pizza'
 
+const OrderInfo = styled.div`
+    *{
+    font-size: 62.5%;
+    }
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
 
+    .background{
+    background-image: url("https://images.unsplash.com/photo-1544982503-9f984c14501a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: fit-content;
+    }
 
-// //declaring initial state
-//     const initialFormValues = {
-//         name: "",
-//         email: "",
-//         pizzaSize: "",
-//         sauce: "",
-//         pepperoni: false,
-//         sausage: false,
-//         bacon: false,
-//         spicySausage: false,
-//         grilledChicken: false,
-//         redOnion: false,
-//         dicedWhiteOnion: false,
-//         greenPepper: false,
-//         dicedTomatoes: false,
-//         blackOlives: false,
-//         artichokeHearts: false,
-//         pineapple: false,
-//         substitute: false,
-//         quantity: "",
-//         instructions: "",
-//         total: 0,
-//     };
+    .nav-links{
+    font-size: 3rem;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: .5rem;
+    margin-right: 4rem;
+    }
 
-//     const initialFormErrors = {
-//         name: "",
-//         email: "",
-//         pizzaSize: "",
-//         sauce: "",
-//         quanity: "",
-//     }
-
-//     const initialOrder = [];
-//     const initialDisabled = true;
-
-//     export default function PizzaForm() {
-//     const [order, setOrder] = useState(initialOrder); 
-//     const [formValues, setFormValues] = useState(initialFormValues); 
-//     const [formErrors, setFormErrors] = useState(initialFormErrors);
-//     const [disabled, setDisabled] =useState(initialDisabled);
+    .home{
+    text-decoration: none;
+    color: white;
+    text-shadow: 1px 1px 1px gray;
+    }
     
-//     const postNewOrder = (newOrder) => {
-//         axios
-//         .post("https://reqres.in/api/users", newOrder)
-//         .then(res => {
-//             setOrder(res.data);
-//             setFormValues(initialFormValues);
-//         })
-//         .catch(err => {
-//             console.log("Oops, something went wrong!", err);
-//         });
-//     };
+    .formTitle{
+    font-size: 6rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 1px gray;
+    font-family: Arial, Helvetica, sans-serif;
+    }
 
-//     const inputChange = (name, value) => {
-//         yup
-//           .reach(schema, name)
-//           .validate(value)
-//           .then(() => {
-//             setFormErrors({
-//               ...formErrors, [name]: "",
-//             });
-//           })
-//           .catch((err) => {
-//             setFormErrors({
-//               ...formErrors, [name] : err.errors[0],
-//             });
-//           });
-//           setFormValues({
-//             ...formValues, [name]: value,
-//           });
-//       };
-    
-    
-      
-//     const onSubmit = (evt) => {
-//         evt.preventDefault();
-//         const newOrder = {
-//             name: formValues.name.trim(),
-//             email: formValues.email.trim(),
-//             pizzaSize: formValues.pizzaSize,
-//             sauce: formValues.sauce,
-//             toppings: ["pepperoni", "sausage", "bacon", "spicySausage", "grilledChicken", "redOnion", "dicedWhiteOnion", "greenPepper", "dicedTomatoes", "blackOlives", "artichokeHearts", "pineapple", ].filter((toppings) => formValues[toppings]),
-//             substitute: formValues.substitute,
-//             instructions: formValues.instructions.trim()
-//         };
-//         postNewOrder(newOrder);
-//   };
-        
-    
+    .formContainer{
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: center;
+        width: 100%;
+        /* border: 1px solid white; */
+        align-self: center;
+    }
+    .formContent{
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        width: 45%;
+        padding: 1rem;
+        background-color: #ffffff;
+        opacity: 0.7;
+        margin-bottom: 2rem;
+    }
 
-//     const history = useHistory();
-//         const routeToOrder = event => {
-//         history.push("/Order");
-    
-//     useEffect(() => {
-//         schema.isValid(formValues)
-//         .then((valid) => {
-//             setDisabled(!valid);
-//         });
-//     }, [formValues])
-//     }
-    
-    
+    .formInputs{
+        align-items: center;
+        text-align: left;
+        color: black;
+        font-size: 1.8rem; 
+        width:100%; 
+    }
 
-//     // const onSubmit = (evt) => {
-//     //     evt.preventDefault();
-//     //     // formSubmit()
-//     //     // let orderId = order.length;
-//     //     // let orderDetails = {"orderId": orderId, "pizzaSize": formValues.pizzaSize, "sauce": formValues.sauce, "toppings": formValues.toppings, "substitute": formValues.substitute, "total": formValues.total};
-//     //     // history.push("/pizza")
-//     //         formSubmit()
-//     //     }
-        
+    #textInput{
+        height: 38px;
+        font-size: 1.4rem;
+        color: black;
+        width: 100%; 
+    }
 
-//     const onChange = (evt) => {
-//         const {name, value, checked, type} =evt.target;
-//         const newValue = type === "checkbox" ? checked : value;
-        
-//         formValues.total= 0
-//         if (formValues.pizzaSize === "small"){
-//             formValues.total += 5;
+    select, input{
+      width:100%;
+      box-sizing:border-box;
+    }
+
+    .dropdown{
+        color: black;
+        font-size: 1.8rem;   
+        text-align: left;
+        margin: .2rem;
+    }
+     #dropdown{
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        width: 100%;
+        padding: .2rem;
+        font-size: 1.5rem;
+        margin: .3rem 0;  
+     }   
+
+    p{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.3rem;
+        align-self: center;
+        align-content: center;
+    }
+    .subtitle{
+        font-size: 1.4rem;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        display: flex;
+        flex-direction: column;  
+    }
+
+    h4{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.2rem;
+    }
+
+    .subtitle2{
+        font-size: 1.5rem;
+    }
+
+    .formInputs label{
+        line-height: 2.6rem;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+    
+    .formInputs input{
+        /* height: 20vh; */
+        width: 23rem;
+    }
+    
+    .checkbox{
+        display: flex;
+        flex-direction: column;
+        /* flex-wrap: wrap; */
+        align-content: flex-start;
+        text-align: left;
+        width: 40rem;
+        font-size: 1.6rem;
+    }
+
+    .checkbox input{
+        /* position: static; */
+        /* display: flex;
+        flex-direction: column; */
+        width: 1.5rem;
+        margin-left: 3rem;
+    }
+
+    button{
+        padding: 1rem;
+        margin: 2rem;
+        font-size: 1.5rem;
+    }
+    .error{
+        font-size: 1.1rem;
+        color: red;
+    }
+    @media(max-width: 400px){
+        .nav-links{
+        font-size: 2rem;
+        justify-content: center;
+        margin-right: 0rem;
+    }  
+        .formTitle{
+        font-size: 4rem;
+        }   
+        .formContent{
+        width: 78%;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    .checkbox{
+        width: 15rem;
+        font-size: 1.6rem;
+    }
+    .checkbox input{
+        width: 1.5rem;
+        margin-left: .5rem;
+    }
+    }
+    @media(max-width: 768px){
+        .formContent{
+        width: 89%;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+`
+
+const PizzaForm = (props) => {
+    const {values, change, disabled, errors, submit } = props;
+
+    const history = useHistory();
+    const routeToOrderForm = () => {
+        history.push('/order');
+    }
+
+    const onSubmit = (evt) => {
+        evt.preventDefault();
+        submit()
+    };
+     
+
+    const onChange = (evt) => {
+        const { name, value, checked, type } = evt.target;
+        const newValue = type === "checkbox" ? checked : value;
+        values.total = 0;
+        if (values.pizzaSize === "small"){
+            values.total += 5;
                 
-//         }
-//         else if (formValues.pizzaSize === "medium"){
-//             formValues.total += 7;
+        }
+        else if (values.pizzaSize === "medium"){
+            values.total += 7;
             
-//         }
-//         else if (formValues.pizzaSize === "large"){
-//             formValues.total += 11;
+        }
+        else if (values.pizzaSize === "large"){
+            values.total += 11;
             
-//         }
-//         else if (formValues.pizzaSize  === "exlarge"){
-//             formValues.total += 15;
+        }
+        else if (values.pizzaSize  === "exlarge"){
+            values.total += 15;
             
-//         }else{
-//             formValues.total = 0;
-//         }
-//         if(formValues.substitute === true) {
-//             formValues.total += 2
-//         }
-//         formValues.total = formValues.total * formValues.quantity;
-        
-//         inputChange(name, newValue)
-//         };
+        }else{
+            values.total = 0;
+        }
+        if(values.substitute === true) {
+            values.total += 2
+        }
+        values.total = values.total * values.quantity;
+        change(name, newValue);
+    };
     
-//     return (
-//     <div>
-//         <div className="title">
-//             Build Your Own Pizza
-//         </div>
-//         <img src="https://images.unsplash.com/photo-1572455021453-7d0b208ae250?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60" alt="pizza"/>
-        
-//         <Form onSubmit={onSubmit}>
-//     {/* Name */}
-//         <Form.Group as={Row} controlId="formHorizontalName">
-//             <Form.Label column sm={2}>
-//             Name
-//             </Form.Label>
-//             <Col sm={10}>
-//             <Form.Control 
-//                 name= "name" 
-//                 type="text" 
-//                 placeholder="Enter Name"
-//                 onChange={onChange}
-//                 value={formValues.name} />
-//                 {formErrors.name.length > 0 ? <p className="error">{formErrors.name}</p>: null}
-//             </Col>
-//         </Form.Group>
-// {/* Email */}
-//         <Form.Group as={Row} controlId="formHorizontalEmail">
-//             <Form.Label column sm={2}>
-//             Email:
-//             </Form.Label>
-//             <Col sm={10}>
-//             <Form.Control 
-//             type="email" 
-//             name="email"
-//             onChange={onChange}
-//             value={formValues.email}
-//             placeholder="Enter Valid Email" />
-//             {formErrors.email.length > 0 ? <p className="error">{formErrors.email}</p>: null}
-//             </Col>
-//         </Form.Group>
-//         <Form.Group as={Row} controlId="formHorizontalQuantity">
-//         <Col sm={{ span: 3, offset: 2 }}>
-//             <Form.Control 
-//                 name= "quantity" 
-//                 type="number" 
-//                 min="1"
-//                 max="10"
-//                 placeholder="Select Quantity"
-//                 onChange={onChange}
-//                 value={formValues.quantity} />
-//             </Col>
-//         </Form.Group>
-// {/* Size */}
-//         <Form.Group as={Row} controlId="formHorizontalSize">
-//             <Form.Label column sm={2}>
-//             Choose your size:
-//             </Form.Label>
-//             <Col sm={10}>
-//             <Form.Control 
-//                 as="select"
-//                 name="pizzaSize" 
-//                 onChange={onChange}>
-//                 {/* // value={formValues.pizzaSize}> */}
-//                 <option value="">--Select Size--</option>
-//                 <option value="small">Small-10 inch, 6 slices</option>
-//                 <option value="medium">Medium-12 inches, 8 slices</option>
-//                 <option value="large">Large-14 inches, 10 slices</option>
-//                 <option value="exlarge">ExLarge-18 inches, 12 slices</option>
-//             </Form.Control>
-//             {formErrors.pizzaSize.length > 0 ? <p className="error">{formErrors.pizzaSize}</p>: null}
-//             </Col>
-//         </Form.Group>
-//         {/* substitute*/}
-// <Form.Group as={Row} controlId="formHorizontalCheck">
-//         <Form.Label column sm={2}>
-//             Substitutions
-//         </Form.Label>
-//             <Col sm={10}>
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="substitute"
-//                 onChange={onChange}
-//                 value="gluten"
-//                 label="Gluten Free Crust (+ $2.00)" />
-//             </Col>
-//         </Form.Group>
-// {/* Sauce */}
-//         <Form.Group as={Row} controlId="formHorizontalSauce">
-//             <Form.Label column sm={2}>
-//             Choose your sauce:
-//             </Form.Label>
-//             <Col sm={10}>
-//             <Form.Control 
-//                 as="select"
-//                 name="sauce" 
-//                 onChange={onChange}
-//                 value={formValues.sauce}>
-//                 <option>--Select Sauce--</option>
-//                 <option>Original Red</option>
-//                 <option>Alfredo</option>
-//                 <option>Garlic Ranch</option>
-//                 <option>Buffalo</option>
-//                 <option>BBQ</option>
-//                 <option>No Sauce</option>
-//             </Form.Control>
-//             {formErrors.sauce.length > 0 ? <p className="error">{formErrors.sauce}</p>: null}
-//             </Col>
-//         </Form.Group>
-// {/* Toppings Checkbox */}
-//         <Form.Group as={Row} controlId="formHorizontalCheck">
-//         <Form.Label column sm={2}>
-//             Choose your Toppings:
-//         </Form.Label>
-//             <Col sm={10}>
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="pepperoni"
-//                 onChange={onChange}
-//                 value={formValues.pepperoni}
-//                 label="Pepperoni" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="sausage"
-//                 onChange={onChange}
-//                 value={formValues.sauasage}
-//                 label="Sausage" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="bacon"
-//                 onChange={onChange}
-//                 value={formValues.bacon}
-//                 label="Bacon" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="spicySausage"
-//                 onChange={onChange}
-//                 value={formValues.spicySausage}
-//                 label="Spicy Sausage" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="grilledChicken"
-//                 onChange={onChange}
-//                 value={formValues.grilledChicken}
-//                 label="Grilled Chicken" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="redOnion"
-//                 onChange={onChange}
-//                 value={formValues.redOnion}
-//                 label="Red Onion" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="dicedWhiteOnion"
-//                 onChange={onChange}
-//                 value={formValues.dicedWhiteOnion}
-//                 label="Diced White Onion" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="greenPepper"
-//                 onChange={onChange}
-//                 value={formValues.greenPepper}
-//                 label="Green Pepper" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="dicedTomatoes"
-//                 onChange={onChange}
-//                 value={formValues.dicedTomatoes}
-//                 label="Diced Tomatoes" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="blackOlives"
-//                 onChange={onChange}
-//                 value={formValues.blackOlives}
-//                 label="Black Olive" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="artichokeHearts"
-//                 onChange={onChange}
-//                 value={formValues.artichokeHearts}
-//                 label="Artichoke Hearts" />
-//             <Form.Check 
-//                 type="checkbox"
-//                 name="pineapple"
-//                 onChange={onChange}
-//                 value={formValues.pineapple}
-//                 label="Pineapple" />
-            
-//             </Col>
-//         </Form.Group>
 
-// {/* Special Instructions */}
-//         <Form.Group controlId="exampleForm.ControlTextarea1">
-//         <Form.Label>
-//             Special instructions
-//         </Form.Label>
-//         <Form.Control 
-//             as="textarea" rows={3} 
-//             onChange={onChange}
-//             value={formValues.instructions}
-//             name="instructions"
-//             />
-//         </Form.Group>
-//         <Form.Group as={Row}>
-//             <Col sm={{ span: 10, offset: 2 }}>
-//             <button 
-//             disabled={disabled}
-//             onClick={routeToOrder}>Add to Order ${formValues.total}</button>
-//             </Col>
-//         </Form.Group>
-//         </Form>
-//         {/* <div>
-//             {order.map((order) => {
-//                 return <Pizza key={order.id} details={order}/>
-//             })}
-//         </div> */}
-        
-//     </div>
-//     );
-// }
+    return (
+    <OrderInfo>
+        <div className="background">
+            <div className="nav-links">
+                <Link className="home" to="/">Home</Link>
+            </div>
+            <div className="formTitle">
+                    <h2>Build Your Own Pizza</h2>
+                    
+                </div>
+            <form className="formContainer" onSubmit={onSubmit}>
+                <div className="formContent">
+
+                <div className="formInputs">
+                    <label>
+                        Name:
+                        <input
+                            id="textInput"
+                            type="text"
+                            name="name"
+                            onChange={onChange}
+                            value={values.name}
+                            
+                        />
+                        {errors.name.length > 0 ? ( <p className='error' > {errors.name} </p> ) : null }
+                    </label>
+                </div>
+                <div className="formInputs">
+                    <label>
+                        Email:
+                        <input
+                            id="textInput"
+                            type="email"
+                            name="email"
+                            onChange={onChange}
+                            value={values.email}
+                            
+                        />
+                        {errors.email.length > 0 ? ( <p className='error' > {errors.email} </p> ) : null }
+                    </label>
+                </div>
+                    
+                <div className="dropdown">
+                    {/* Quantity */}
+                    <label>
+                    Quantity:
+                        <input
+                            id="dropdown"
+                            type="number"
+                            name="quantity"
+                            min="1"
+                            max="2"
+                            onChange={onChange}
+                            value={values.quantity}
+            
+                        />
+                    </label>
+                </div>
+                <div className="dropdown">
+                    {/* Size */}
+                    <label>
+                        Pick Your Size:
+                        <select
+                            id="dropdown"
+                            name="pizzaSize"
+                            onChange={onChange}
+                            value={values.pizzaSize}>
+                            <option
+                            value="">--Select Size--</option>
+                            <option
+                            value="small">Small-10 inch, 6 slices</option>
+                            <option
+                            value="medium">Medium-12 inches, 8 slices</option>
+                            <option
+                            value="large">Large-14 inches, 10 slices</option>
+                            <option
+                            value="exlarge">ExLarge-18 inches, 12 slices</option>
+                        </select>
+                        {errors.pizzaSize.length > 0 ? ( <p className='error' > {errors.pizzaSize} </p> ) : null }
+                    </label>
+                </div>
+                {/* Sauce */}
+                <div className="dropdown">
+                    <label>
+                        Pick Your Sauce
+                        <select
+                            id="dropdown"
+                            name="sauce"
+                            onChange={onChange}
+                            value={values.sauce}>
+                            <option>--Select Sauce--</option>
+                            <option>Original Red</option>
+                            <option>Alfredo</option>
+                            <option>Garlic Ranch</option>
+                            <option>Buffalo</option>
+                            <option>BBQ</option>
+                            <option>No Sauce</option>
+                        </select>
+                        {errors.sauce.length > 0 ? ( <p className='error' > {errors.sauce} </p> ) : null }
+                    </label>
+                </div>
+                <p>All pizzas are made on our homemade, hand-tossed crust!<br></br><br></br>
+                    {/* Substitutions */}
+            
+                    <span className="subtitle">Need a gluten free option?</span></p>
+                <div className="checkbox">
+                    <label>
+                    
+                        <input 
+                            id="checkbox"
+                            type="checkbox"
+                            name="substitute"
+                            checked={values.substitute}
+                            onChange={onChange}
+                            />
+                            Gluten Free Crust(+ $2.00)
+                    </label>
+                </div>
+                    
+                {/* toppings checkbox */}
+                <p className="subtitle2">Choose Your Toppings:</p>
+                <div className="checkbox">
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="pepperoni"
+                            checked={values.pepperoni}
+                            onChange={onChange}
+                            />
+                            Pepperoni
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="bacon"
+                            checked={values.bacon}
+                            onChange={onChange}
+                            />
+                            Bacon
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="spicySausage"
+                            checked={values.spicySausage}
+                            onChange={onChange}
+                            />
+                            Spicy Sausage
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="grilledChicken"
+                            checked={values.grilledChicken}
+                            onChange={onChange}
+                            />
+                            Grilled Chicken
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="redOnion"
+                            checked={values.redOnion}
+                            onChange={onChange}
+                            />
+                            Red Onion
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="dicedWhiteOnion"
+                            checked={values.dicedWhiteOnion}
+                            onChange={onChange}
+                            />
+                            Diced White Onion
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="greenPepper"
+                            checked={values.greenPepper}
+                            onChange={onChange}
+                            />
+                            Green Pepper
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="dicedTomatoes"
+                            checked={values.dicedTomatoes}
+                            onChange={onChange}
+                            />
+                            Diced Tomatoes
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="blackOlives"
+                            checked={values.blackOlives}
+                            onChange={onChange}
+                            />
+                            Black Olives
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="artichokeHearts"
+                            checked={values.artichokeHearts}
+                            onChange={onChange}
+                            />
+                            Artichoke Hearts
+                    </label>
+
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="pineapple"
+                            checked={values.pineapple}
+                            onChange={onChange}
+                            />
+                            Pineapple
+                    </label>
+
+                </div>
+                <div className="formInputs">
+                    <label>
+                        Special Instructions:
+                        <input
+                            id="textInput"
+                            type="textarea"
+                            name="instructions"
+                            onChange={onChange}
+                            value={values.instructions}
+                            
+                            
+                        />
+                    </label>
+                </div>
+                
+                <div>
+                <button className="submit" disabled={disabled} onClick={routeToOrderForm} >Add to Order ${values.total}</button>
+                </div>
+                </div>
+            </form>
+        </div>
+        <Route path={"/order"}>
+        <Pizza
+        values={values}/>
+        </Route>
+    </OrderInfo>
+
+    
+    )
+}
+
+export default PizzaForm

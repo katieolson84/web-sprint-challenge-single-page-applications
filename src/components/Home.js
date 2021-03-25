@@ -5,21 +5,25 @@ import styled from 'styled-components'
 const HomeContainer = styled.div`
     *{
     font-size: 62.5%;
-    }
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+    }
     display: flex;
     flex-direction: column;
     align-content: center;
     text-align: center;
     width: 100vw;
-    height: 100vh;
+    // height: auto;
   
   .home-wrapper{
     background-image: url("https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1225&q=80");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 100vh;
+    min-height: calc(100vh);
+    overflow:hidden;
     }
     .transbox{
         background-color: #ffffff;
@@ -59,12 +63,13 @@ const HomeContainer = styled.div`
     display: flex;
     color: white;
     justify-content: center;
-    margin-top: 10rem;
+    margin-top: 8rem;
     font-size: 4rem;
+    
   }
   .footer p{
-    /* padding: 2rem; */
     text-shadow: 1px 1px 1px gray;
+    margin-bottom: 0;
   }
   @media(max-width: 768px){
     .transbox{
@@ -111,8 +116,9 @@ const HomeContainer = styled.div`
         margin-bottom: 0rem;
     }
     .footer{
-    margin-top: 1rem;
+    margin-top: 2rem;
     font-size: 2.8rem;
+    margin-bottom: 0;
     }
 }
 `
